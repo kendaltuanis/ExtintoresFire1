@@ -17,6 +17,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuBar;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -42,13 +43,13 @@ public class VistaControllerProductos implements Initializable {
     private int posicionPersonaEnTabla;
 
     @FXML
-    private TextField txtGravado;
-
-    @FXML
-    private TextField txtExento;
+    private TextField txtGravado, txtExento;
 
     @FXML
     private MenuBar menu;
+
+    @FXML
+    private ComboBox cbmCantidad, cbmDescripcion;
 
     @FXML
     private void irMenu(ActionEvent e) {
@@ -89,6 +90,18 @@ public class VistaControllerProductos implements Initializable {
     @FXML
     private void aniadir(ActionEvent event) {
 
+        try {
+            cbmCantidad.getValue().toString();
+            cbmCantidad.getValue().toString();
+        } catch (Exception e) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Campos erroneos");
+            alert.setContentText("Cantidad o Descripción no está escogido");
+            alert.showAndWait();
+            return;
+        }
+
         if (txtExento.getText().equals("") && txtGravado.getText().equals("")) {
             Alert alert = new Alert(AlertType.ERROR);
             alert.setTitle("Error");
@@ -97,25 +110,27 @@ public class VistaControllerProductos implements Initializable {
             alert.showAndWait();
             return;
         }
-          
-
         if (txtExento.getText().equals("") && !txtGravado.getText().equals("")) {
+            int gravado = Integer.parseInt(txtGravado.getText());
+            int cantidad = Integer.parseInt(cbmCantidad.getValue().toString());
             Productos pro = new Productos();
-            pro.nombre.set("PRUEBA");  // nombre
+            pro.nombre.set(cbmDescripcion.getValue().toString());  // nombre
             pro.apellido.set(null);   //apellido
-            pro.edad.set(24);   // edad
-            pro.telefono.set(txtGravado.getText()); // telefono
+            pro.edad.set(cantidad);   // edad
+            pro.telefono.set(String.valueOf((gravado * cantidad))); // telefono
             productos.add(pro);
             txtGravado.clear();
             return;
         } else if (!txtExento.getText().equals("") && txtGravado.getText().equals("")) {
+            int exento = Integer.parseInt(txtExento.getText());
+            int cantidad = Integer.parseInt(cbmCantidad.getValue().toString());
             Productos pro = new Productos();
-            pro.nombre.set("PRUEBA");
-            pro.apellido.set(txtExento.getText());
-            pro.edad.set(24);
+            pro.nombre.set(cbmDescripcion.getValue().toString());
+            pro.apellido.set(String.valueOf((exento * cantidad)));
+            pro.edad.set(cantidad);
             pro.telefono.set(null);
             productos.add(pro);
-             txtExento.clear();
+            txtExento.clear();
             return;
         }
 
@@ -222,11 +237,23 @@ public class VistaControllerProductos implements Initializable {
 
     }
 
+    private void inicializarComboBoxs() {
+        cbmCantidad.getItems().addAll(
+                1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20
+        );
+        cbmDescripcion.getItems().addAll(
+                "Ext ABC 4kg", "Ext ABC 2kg", "Ext ABC 1kg", "Ext BC 4.5kg", "RepExtABC 10lbs", "RepExtABC 5lbs", "RepExtABC 2.2lbs", "RepExtABC 20lbs", "RepExtABC 15lbs",
+                "RecExtBC 10lbs", "RecExtBC 20lbs", "RecExtBC 15lbs", "RecExtBC 5lbs", "ManBC 10lbs", "ManBC 20lbs", "ManBC 5lbs", "ManBC 15lbs", "RepExtAFFF 20lbs", "RepExtAFFF 10lbs"
+        );
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
 
         // Inicializamos la tabla
         this.inicializarTablaPersonas();
+
+        inicializarComboBoxs();
 
         // Solo números en los textfield
         SoloNumeros();
