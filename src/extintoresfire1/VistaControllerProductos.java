@@ -43,13 +43,13 @@ public class VistaControllerProductos implements Initializable {
     private int posicionPersonaEnTabla;
 
     @FXML
-    private TextField txtGravado, txtExento;
+    private TextField txtGravado, txtExento, txtTotal;
 
     @FXML
     private MenuBar menu;
 
     @FXML
-    private ComboBox cbmCantidad, cbmDescripcion;
+    private ComboBox cbmCantidad, cbmDescripcion,cmbTipoPago;
 
     @FXML
     private void irMenu(ActionEvent e) {
@@ -120,6 +120,12 @@ public class VistaControllerProductos implements Initializable {
             pro.telefono.set(String.valueOf((gravado * cantidad))); // telefono
             productos.add(pro);
             txtGravado.clear();
+            if (txtTotal.getText().equals("")) {
+                txtTotal.setText(String.valueOf((gravado * cantidad)));
+            } else {
+                int t = Integer.parseInt(txtTotal.getText()) + (gravado * cantidad);
+                txtTotal.setText(String.valueOf(t));
+            }
             return;
         } else if (!txtExento.getText().equals("") && txtGravado.getText().equals("")) {
             int exento = Integer.parseInt(txtExento.getText());
@@ -131,6 +137,13 @@ public class VistaControllerProductos implements Initializable {
             pro.telefono.set(null);
             productos.add(pro);
             txtExento.clear();
+
+            if (txtTotal.getText().equals("")) {
+                txtTotal.setText(String.valueOf((exento * cantidad)));
+            } else {
+                int t = Integer.parseInt(txtTotal.getText()) + (exento * cantidad);
+                txtTotal.setText(String.valueOf(t));
+            }
             return;
         }
 
@@ -244,7 +257,9 @@ public class VistaControllerProductos implements Initializable {
         cbmDescripcion.getItems().addAll(
                 "Ext ABC 4kg", "Ext ABC 2kg", "Ext ABC 1kg", "Ext BC 4.5kg", "RepExtABC 10lbs", "RepExtABC 5lbs", "RepExtABC 2.2lbs", "RepExtABC 20lbs", "RepExtABC 15lbs",
                 "RecExtBC 10lbs", "RecExtBC 20lbs", "RecExtBC 15lbs", "RecExtBC 5lbs", "ManBC 10lbs", "ManBC 20lbs", "ManBC 5lbs", "ManBC 15lbs", "RepExtAFFF 20lbs", "RepExtAFFF 10lbs"
-        );
+        );     
+        cmbTipoPago.getItems().addAll("Efectivo","Transferencia/Depósito","Cheque");
+        
     }
 
     @Override
