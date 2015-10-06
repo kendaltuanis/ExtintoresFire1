@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1202.0" prefWidth="798.0" styleClass="pane" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="extintoresfire1.MenuController">
+   <top>
+      <ImageView fitHeight="297.0" fitWidth="798.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@Resourse/portadaFire2.jpg" />
+         </image>
+      </ImageView>
+   </top>
+   <center>
+      <Pane prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <children>
+            <Button layoutX="480.0" layoutY="105.0" mnemonicParsing="false" prefHeight="226.0" prefWidth="255.0" styleClass="button1" />
+            <Label layoutX="123.0" layoutY="329.0" prefHeight="45.0" prefWidth="156.0" text="Facturación">
+               <font>
+                  <Font name="Impact" size="30.0" />
+               </font>
+            </Label>
+            <Button layoutX="59.0" layoutY="397.0" mnemonicParsing="false" prefHeight="238.0" prefWidth="285.0" styleClass="button2" />
+            <Button fx:id="facturacion" layoutX="75.0" layoutY="99.0" mnemonicParsing="false" onAction="#Facturacion" prefHeight="230.0" prefWidth="251.0" styleClass="button4" />
+            <Button layoutX="449.0" layoutY="408.0" mnemonicParsing="false" prefHeight="239.0" prefWidth="303.0" styleClass="button3" />
+            <Label layoutX="523.0" layoutY="330.0" prefHeight="44.0" prefWidth="189.0" text="Cierre/reporte">
+               <font>
+                  <Font name="Impact" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="137.0" layoutY="625.0" prefHeight="45.0" prefWidth="156.0" text="Inventario">
+               <font>
+                  <Font name="Impact" size="30.0" />
+               </font>
+            </Label>
+            <Label layoutX="539.0" layoutY="613.0" prefHeight="45.0" prefWidth="156.0" text="Ganancias">
+               <font>
+                  <Font name="Impact" size="30.0" />
+               </font>
+            </Label>
+         </children>
+      </Pane>
+   </center>
+   <bottom>
+      <ImageView fitHeight="116.0" fitWidth="586.0" pickOnBounds="true" BorderPane.alignment="CENTER">
+         <image>
+            <Image url="@Resourse/marcas.jpg" />
+         </image>
+         <BorderPane.margin>
+            <Insets bottom="10.0" />
+         </BorderPane.margin>
+      </ImageView>
+   </bottom>
+</BorderPane>

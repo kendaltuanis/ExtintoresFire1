@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.media.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane id="BorderPane" prefHeight="523.0" prefWidth="802.0" styleClass="background-image" stylesheets="@../resource/DarkTheme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <top>
+      <ImageView fitHeight="106.0" fitWidth="780.0" pickOnBounds="true">
+         <image>
+            <Image url="@../resource/titulo.png" />
+         </image>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <effect>
+            <ColorAdjust brightness="-0.45" contrast="1.0" />
+         </effect>
+      </ImageView>
+   </top>
+   <bottom>
+      <FlowPane prefHeight="129.0" prefWidth="782.0" BorderPane.alignment="CENTER">
+         <children>
+            <RadioButton mnemonicParsing="false" text="Refuerzo #1">
+               <toggleGroup>
+                  <ToggleGroup fx:id="groupRadioButton" />
+               </toggleGroup>
+               <FlowPane.margin>
+                  <Insets left="639.0" top="10.0" />
+               </FlowPane.margin>
+            </RadioButton>
+            <HBox prefHeight="31.0" prefWidth="756.0" spacing="2.0">
+               <children>
+                  <RadioButton mnemonicParsing="false" prefHeight="26.0" prefWidth="176.0" text="Grupo San Carlos" toggleGroup="$groupRadioButton">
+                     <tooltip>
+                        <Tooltip text="Selecciona la ruta" />
+                     </tooltip>
+                     <HBox.margin>
+                        <Insets />
+                     </HBox.margin>
+                  </RadioButton>
+                  <RadioButton mnemonicParsing="false" prefHeight="26.0" prefWidth="159.0" text="Grupo Guápiles" toggleGroup="$groupRadioButton" />
+                  <RadioButton mnemonicParsing="false" prefHeight="26.0" prefWidth="154.0" text="Grupo Alajuela" toggleGroup="$groupRadioButton" />
+                  <RadioButton mnemonicParsing="false" prefHeight="26.0" prefWidth="152.0" text="Grupo Liberia" toggleGroup="$groupRadioButton" />
+                  <RadioButton mnemonicParsing="false" prefHeight="26.0" prefWidth="133.0" text="Refuerzo #2">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="groupRadioButton1" />
+                     </toggleGroup>
+                  </RadioButton>
+               </children>
+               <FlowPane.margin>
+                  <Insets left="10.0" top="10.0" />
+               </FlowPane.margin>
+            </HBox>
+            <PasswordField prefHeight="37.0" prefWidth="759.0" promptText="Ingrese la contraseña de su ruta">
+               <FlowPane.margin>
+                  <Insets left="10.0" top="8.0" />
+               </FlowPane.margin>
+            </PasswordField>
+         </children>
+      </FlowPane>
+   </bottom>
+   <right>
+      <Accordion BorderPane.alignment="CENTER">
+        <panes>
+          <TitledPane animated="false" prefHeight="256.0" prefWidth="189.0" text="Noticias/Avisos">
+            <content>
+              <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+            </content>
+               <padding>
+                  <Insets right="1.5" />
+               </padding>
+               <tooltip>
+                  <Tooltip text="Avisos importantes de la empresa" />
+               </tooltip>
+          </TitledPane>
+        </panes>
+         <BorderPane.margin>
+            <Insets top="10.0" />
+         </BorderPane.margin>
+      </Accordion>
+   </right>
+</BorderPane>

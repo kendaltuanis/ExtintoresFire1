@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1202.0" prefWidth="796.0" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="extintoresfire1.ReciboController">
+   <top>
+      <VBox prefHeight="256.0" prefWidth="796.0" BorderPane.alignment="CENTER">
+         <children>
+            <MenuBar fx:id="menu">
+               <menus>
+                  <Menu mnemonicParsing="false" text="Menú">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#irMenu" text="Ir a menú" />
+                        <SeparatorMenuItem mnemonicParsing="false" />
+                     </items>
+                  </Menu>
+                  <Menu mnemonicParsing="false" text="Recibo">
+                     <items>
+                        <MenuItem mnemonicParsing="false" onAction="#nuevoRecibo" text="Nuevo Abono" />
+                     </items></Menu>
+                  <Menu mnemonicParsing="false" text="Ayuda">
+                     <items>
+                        <MenuItem mnemonicParsing="false" text="About" />
+                     </items>
+                  </Menu>
+               </menus>
+            </MenuBar>
+            <DatePicker editable="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="51.0" prefWidth="336.0" promptText="Escoger Fecha">
+               <VBox.margin>
+                  <Insets left="443.0" top="20.0" />
+               </VBox.margin>
+            </DatePicker>
+            <Label text="Recibo de abono">
+               <font>
+                  <Font size="36.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="270.0" top="10.0" />
+               </VBox.margin>
+            </Label>
+            <Separator prefWidth="200.0" />
+            <ComboBox prefHeight="55.0" prefWidth="212.0" promptText="Tipo de Pago">
+               <VBox.margin>
+                  <Insets left="562.0" top="5.0" />
+               </VBox.margin>
+            </ComboBox>
+         </children>
+      </VBox>
+   </top>
+   <left>
+      <VBox prefHeight="954.0" prefWidth="239.0" BorderPane.alignment="CENTER">
+         <children>
+            <Label text="Recibido de:">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="50.0" />
+               </VBox.margin>
+            </Label>
+            <Label text="La suma de:">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="50.0" />
+               </VBox.margin>
+            </Label>
+            <Label prefHeight="39.0" prefWidth="211.0" text="Por concepto de:">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="20.0" top="50.0" />
+               </VBox.margin>
+            </Label>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="40.0" />
+               </VBox.margin>
+            </Separator>
+            <Label text="Saldo" underline="true">
+               <font>
+                  <Font size="27.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="85.0" top="20.0" />
+               </VBox.margin>
+            </Label>
+            <TextField editable="false" prefHeight="45.0" prefWidth="239.0">
+               <VBox.margin>
+                  <Insets left="8.0" right="8.0" top="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="161.0" text="Imprimir">
+               <font>
+                  <Font size="21.0" />
+               </font>
+               <VBox.margin>
+                  <Insets left="40.0" top="382.0" />
+               </VBox.margin>
+            </Button>
+         </children>
+         <BorderPane.margin>
+            <Insets top="30.0" />
+         </BorderPane.margin>
+      </VBox>
+   </left>
+   <center>
+      <VBox prefHeight="969.0" prefWidth="557.0" BorderPane.alignment="CENTER">
+         <children>
+            <TextField prefHeight="50.0" prefWidth="657.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField prefHeight="50.0" prefWidth="657.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="40.0" />
+               </VBox.margin>
+            </TextField>
+            <TextField prefHeight="50.0" prefWidth="657.0">
+               <font>
+                  <Font size="19.0" />
+               </font>
+               <VBox.margin>
+                  <Insets right="20.0" top="40.0" />
+               </VBox.margin>
+            </TextField>
+            <Separator prefWidth="200.0">
+               <VBox.margin>
+                  <Insets top="32.0" />
+               </VBox.margin>
+            </Separator>
+            <TableView prefHeight="431.0" prefWidth="557.0">
+              <columns>
+                <TableColumn prefWidth="278.0" text="Saldos anteriores" />
+                <TableColumn prefWidth="258.0" text="Fecha" />
+              </columns>
+               <VBox.margin>
+                  <Insets right="10.0" top="20.0" />
+               </VBox.margin>
+            </TableView>
+            <HBox prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="200.0" text="Agregar recibo">
+                     <font>
+                        <Font size="21.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="340.0" top="48.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets top="75.0" />
+         </BorderPane.margin>
+      </VBox>
+   </center>
+</BorderPane>

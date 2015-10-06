@@ -1,0 +1,129 @@
+
+.pane {
+    -fx-background-image: url("Resourse/Fondo.jpg"); // setear imagen
+    -fx-background-repeat: stretch;
+    -fx-opacity: 0.87;
+}
+
+
+.Image-View{
+    -fx-border-width: 2px;
+    -fx-padding: 10;
+    -fx-spacing: 8;  
+}
+
+.button1 {
+
+    -fx-background-image: url(Resourse/extintores1.png);
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+
+}
+.button2 {
+
+    -fx-background-image: url(Resourse/extintores2.png);
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+
+}
+.button3 {
+
+    -fx-background-image: url(Resourse/extintores3.png);
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+
+}
+.button4 {
+
+    -fx-background-image: url(Resourse/extintores4.png);
+    -fx-background-color: transparent;
+    -fx-background-repeat: no-repeat;
+    -fx-background-size: stretch;
+
+}
+
+.button:hover {
+    //    -fx-background-color: #3a3a3a;
+    -fx-scale-x: 1.1;
+    -fx-scale-y: 1.1;
+
+}
+
+
+
+.button:pressed, .button:default:hover:pressed {
+    -fx-scale-x: 1;
+    -fx-scale-y: 1;
+}
+
+.background{
+
+    -fx-fill: radial-gradient(focus-angle 45deg, focus-distance 20%, center 25% 25%, radius 50%, reflect, #eeeeee88, #55555588 75%, dimgray);
+    -fx-arc-width:25;
+    -fx-arc-height:25;
+
+    //  -fx-cursor: hand;
+}
+
+
+.grid-pane{
+
+    -fx-background-color: white;
+    -fx-opacity: 0.7;
+
+}
+
+
+
+
+.label-bright {
+    -fx-font-size: 5pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+
+}
+.radio-button{
+    -fx-font-size: 27pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-text-fill: black;
+    -fx-underline: true;
+
+}
+.accordion{
+    -fx-opacity: 0.63;
+
+
+}
+
+
+
+.combo-box{
+    -fx-font-size: 15pt; 
+}
+
+.menu-bar {
+    -fx-font-size: 20pt;
+}
+
+.date-picker{
+
+    -fx-font-size: 18pt;
+}
+
+.table-view {
+
+    -fx-font-size: 15pt;
+    -fx-table-cell-border-color: transparent;
+    -fx-table-header-border-color: transparent;
+    -fx-padding: 5;
+}
+
+
+
+
+
+
+
