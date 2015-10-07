@@ -69,12 +69,12 @@
             <Insets top="35.0" />
          </BorderPane.margin>
          <children>
-            <DatePicker editable="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="51.0" prefWidth="336.0" promptText="Escoger Fecha">
+            <DatePicker fx:id="fechaCalendario" editable="false" nodeOrientation="RIGHT_TO_LEFT" prefHeight="51.0" prefWidth="336.0" promptText="Escoger Fecha">
                <VBox.margin>
                   <Insets bottom="45.0" left="301.0" top="-30.0" />
                </VBox.margin>
             </DatePicker>
-            <TextField prefHeight="50.0" prefWidth="657.0">
+            <TextField fx:id="txtNombre" prefHeight="50.0" prefWidth="657.0">
                <VBox.margin>
                   <Insets left="5.0" right="15.0" top="-35.0" />
                </VBox.margin>
@@ -82,7 +82,7 @@
                   <Font size="19.0" />
                </font>
             </TextField>
-            <TextField prefHeight="50.0" prefWidth="657.0">
+            <TextField fx:id="txtEmpresa" prefHeight="50.0" prefWidth="657.0">
                <VBox.margin>
                   <Insets left="5.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -90,7 +90,7 @@
                   <Font size="19.0" />
                </font>
             </TextField>
-            <TextField prefHeight="50.0" prefWidth="657.0">
+            <TextField fx:id="txtDireccion" prefHeight="50.0" prefWidth="657.0">
                <VBox.margin>
                   <Insets left="5.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -98,7 +98,7 @@
                   <Font size="19.0" />
                </font>
             </TextField>
-            <TextField prefHeight="50.0" prefWidth="657.0">
+            <TextField fx:id="txtTelefono" prefHeight="50.0" prefWidth="657.0">
                <VBox.margin>
                   <Insets left="5.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -106,7 +106,7 @@
                   <Font size="19.0" />
                </font>
             </TextField>
-            <TextField prefHeight="50.0" prefWidth="657.0">
+            <TextField fx:id="txtCedula" prefHeight="50.0" prefWidth="657.0">
                <VBox.margin>
                   <Insets left="5.0" right="15.0" top="15.0" />
                </VBox.margin>
@@ -161,12 +161,17 @@
             </TableView>
             <HBox prefHeight="64.0" prefWidth="798.0">
                <children>
-                  <Button mnemonicParsing="false" onAction="#eliminar" prefHeight="51.0" prefWidth="144.0" text="Eliminar Producto" textAlignment="CENTER">
+                  <ComboBox fx:id="cmbTipoPago" prefHeight="51.0" prefWidth="212.0" promptText="Tipo de Pago">
                      <HBox.margin>
-                        <Insets left="481.0" right="10.0" />
+                        <Insets left="17.0" right="10.0" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <Button mnemonicParsing="false" onAction="#eliminar" prefHeight="51.0" prefWidth="155.0" text="Eliminar Producto" textAlignment="CENTER">
+                     <HBox.margin>
+                        <Insets left="245.0" right="10.0" />
                      </HBox.margin>
                   </Button>
-                  <Button mnemonicParsing="false" onAction="#aniadir" prefHeight="51.0" prefWidth="142.0" text="Agregar producto" textAlignment="CENTER">
+                  <Button mnemonicParsing="false" onAction="#aniadir" prefHeight="51.0" prefWidth="151.0" text="Agregar producto" textAlignment="CENTER">
                      <padding>
                         <Insets left="7.0" right="2.0" />
                      </padding></Button>
@@ -177,30 +182,25 @@
             </HBox>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <Button mnemonicParsing="false" prefHeight="54.0" prefWidth="161.0" text="Imprimir">
+                  <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="161.0" text="Imprimir">
                      <HBox.margin>
-                        <Insets left="17.0" right="10.0" top="5.0" />
+                        <Insets left="17.0" right="10.0" top="10.0" />
                      </HBox.margin>
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Button>
-                  <ComboBox prefHeight="55.0" prefWidth="212.0" promptText="Tipo de Pago">
-                     <HBox.margin>
-                        <Insets left="10.0" right="10.0" top="5.0" />
-                     </HBox.margin>
-                  </ComboBox>
-                  <Button mnemonicParsing="false" prefHeight="55.0" prefWidth="212.0" text="Agregar Factura">
+                  <Button mnemonicParsing="false" onAction="#AgregarFactura" prefHeight="55.0" prefWidth="212.0" text="Agregar Factura">
                      <font>
                         <Font size="21.0" />
                      </font>
                      <HBox.margin>
-                        <Insets left="10.0" right="10.0" top="5.0" />
+                        <Insets left="10.0" right="10.0" top="10.0" />
                      </HBox.margin>
                   </Button>
                   <VBox prefHeight="84.0" prefWidth="185.0">
                      <HBox.margin>
-                        <Insets left="5.0" right="20.0" />
+                        <Insets left="130.0" right="20.0" />
                      </HBox.margin>
                      <children>
                         <Label prefHeight="30.0" prefWidth="174.0" text="Total de la factura">
@@ -208,10 +208,10 @@
                               <Font size="21.0" />
                            </font>
                            <VBox.margin>
-                              <Insets bottom="5.0" left="1.0" />
+                              <Insets bottom="5.0" left="8.0" />
                            </VBox.margin>
                         </Label>
-                        <TextField editable="false" prefHeight="41.0" prefWidth="169.0" />
+                        <TextField fx:id="txtTotal" editable="false" prefHeight="41.0" prefWidth="169.0" />
                      </children>
                   </VBox>
                </children>
@@ -246,7 +246,7 @@
             </MenuBar>
             <HBox prefHeight="100.0" prefWidth="200.0">
                <children>
-                  <RadioButton mnemonicParsing="false" text="Contado">
+                  <RadioButton fx:id="rdbContado" mnemonicParsing="false" text="Contado">
                      <HBox.margin>
                         <Insets left="10.0" right="5.0" top="15.0" />
                      </HBox.margin>
@@ -254,7 +254,7 @@
                         <ToggleGroup fx:id="Facturas" />
                      </toggleGroup>
                   </RadioButton>
-                  <RadioButton mnemonicParsing="false" text="Crédito" toggleGroup="$Facturas">
+                  <RadioButton fx:id="rdbCredito" mnemonicParsing="false" text="Crédito" toggleGroup="$Facturas">
                      <HBox.margin>
                         <Insets left="10.0" top="15.0" />
                      </HBox.margin>

@@ -45,7 +45,7 @@
                </VBox.margin>
             </Label>
             <Separator prefWidth="200.0" />
-            <ComboBox prefHeight="55.0" prefWidth="212.0" promptText="Tipo de Pago">
+            <ComboBox fx:id="cmbTipoPago" prefHeight="55.0" prefWidth="212.0" promptText="Tipo de Pago">
                <VBox.margin>
                   <Insets left="562.0" top="5.0" />
                </VBox.margin>

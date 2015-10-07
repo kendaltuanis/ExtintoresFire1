@@ -1,4 +1,3 @@
-
 package extintoresfire1;
 
 import java.io.IOException;
@@ -10,6 +9,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.MenuBar;
 import javafx.stage.Stage;
 
@@ -18,6 +18,8 @@ public class ReciboController implements Initializable {
     @FXML
     private MenuBar menu;
     
+    @FXML
+    private ComboBox cmbTipoPago;
 
     @FXML
     private void irMenu(ActionEvent e) {
@@ -28,16 +30,16 @@ public class ReciboController implements Initializable {
             System.out.println(ex.getMessage());
         }
         Stage stages = (Stage) menu.getScene().getWindow();
-                stages.close();
-                // la ventana en uso
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                // stage.setTitle("My New Stage Title");
-                stage.setScene(scene);
-                stage.show();
+        stages.close();
+        // la ventana en uso
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        // stage.setTitle("My New Stage Title");
+        stage.setScene(scene);
+        stage.show();
     }
-    
-     @FXML
+
+    @FXML
     private void nuevoRecibo(ActionEvent e) {
         Parent root = null;
         try {
@@ -46,19 +48,23 @@ public class ReciboController implements Initializable {
             System.out.println(ex.getMessage());
         }
         Stage stages = (Stage) menu.getScene().getWindow();
-                stages.close();
-                // la ventana en uso
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                // stage.setTitle("My New Stage Title");
-                stage.setScene(scene);
-                stage.show();
+        stages.close();
+        // la ventana en uso
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        // stage.setTitle("My New Stage Title");
+        stage.setScene(scene);
+        stage.show();
     }
-    
-    
+
+    private void InicializarComboBox() {
+
+        cmbTipoPago.getItems().addAll("Efectivo", "Transferencia/Depósito", "Cheque");
+    }
+
     @Override
     public void initialize(URL url, ResourceBundle rb) {
-        // TODO
-    }    
-    
+        InicializarComboBox();
+    }
+
 }

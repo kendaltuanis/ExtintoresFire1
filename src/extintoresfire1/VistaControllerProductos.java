@@ -1,8 +1,12 @@
 package extintoresfire1;
 
+import extintoresfire1.Controlador.ControladorContado;
+import extintoresfire1.Controlador.ControladorCreditos;
 import java.io.IOException;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -17,8 +21,11 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.MenuBar;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -26,6 +33,11 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class VistaControllerProductos implements Initializable {
+
+    ControladorContado ctrlContado;
+    ControladorCreditos ctrlCreditos;
+
+    String cantidad, descripcion, precioytipo;
 
     // Declaramos la tabla y las columnas
     @FXML
@@ -39,17 +51,21 @@ public class VistaControllerProductos implements Initializable {
     @FXML
     private TableColumn telefonoCL; // gravado
     ObservableList<Productos> productos;   // tab
+    @FXML
+    private DatePicker fechaCalendario;
 
     private int posicionPersonaEnTabla;
 
     @FXML
-    private TextField txtGravado, txtExento, txtTotal;
+    private RadioButton rdbContado, rdbCredito;
+    @FXML
+    private TextField txtGravado, txtExento, txtTotal, txtNombre, txtEmpresa, txtDireccion, txtTelefono, txtCedula;
 
     @FXML
     private MenuBar menu;
 
     @FXML
-    private ComboBox cbmCantidad, cbmDescripcion,cmbTipoPago;
+    private ComboBox cbmCantidad, cbmDescripcion, cmbTipoPago;
 
     @FXML
     private void irMenu(ActionEvent e) {
@@ -257,9 +273,103 @@ public class VistaControllerProductos implements Initializable {
         cbmDescripcion.getItems().addAll(
                 "Ext ABC 4kg", "Ext ABC 2kg", "Ext ABC 1kg", "Ext BC 4.5kg", "RepExtABC 10lbs", "RepExtABC 5lbs", "RepExtABC 2.2lbs", "RepExtABC 20lbs", "RepExtABC 15lbs",
                 "RecExtBC 10lbs", "RecExtBC 20lbs", "RecExtBC 15lbs", "RecExtBC 5lbs", "ManBC 10lbs", "ManBC 20lbs", "ManBC 5lbs", "ManBC 15lbs", "RepExtAFFF 20lbs", "RepExtAFFF 10lbs"
-        );     
-        cmbTipoPago.getItems().addAll("Efectivo","Transferencia/Depósito","Cheque");
-        
+        );
+        cmbTipoPago.getItems().addAll("Efectivo", "Transferencia/Depósito", "Cheque");
+
+    }
+
+    @FXML
+    private void AgregarFactura(ActionEvent event) {
+
+        if (!rdbContado.isSelected() && !rdbCredito.isSelected()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Tipo Factura");
+            alert.setContentText("Selecciona el tipo de factura(Contado/Credito)");
+            alert.showAndWait();
+            return;
+        }
+        if (validarFecha() && cmbTipoPago.getValue() != null) {
+            if (rdbContado.isSelected()) {
+                ctrlContado = new ControladorContado();
+                ObtenerDatosTabla();
+                ctrlContado.Insertar(fechaCalendario.getValue().toString(), txtNombre.getText(),
+                        txtEmpresa.getText(), txtDireccion.getText(), txtCedula.getText(),
+                        txtTelefono.getText(), cantidad, descripcion, precioytipo, cmbTipoPago.getValue().toString());
+                return;
+            } else {
+                ctrlCreditos = new ControladorCreditos();
+                ObtenerDatosTabla();
+                ctrlCreditos.Insertar(fechaCalendario.getValue().toString(), txtNombre.getText(),
+                        txtEmpresa.getText(), txtDireccion.getText(), txtCedula.getText(),
+                        txtTelefono.getText(), cantidad, descripcion, precioytipo);
+
+                return;
+            }
+
+        }
+        if (!rdbCredito.isSelected()) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Método de pago");
+            alert.setContentText("Selecciona el método de pago");
+            alert.showAndWait();
+        }
+
+    }
+
+    private void ObtenerDatosTabla() {
+
+        cantidad = "";
+        descripcion = "";
+        precioytipo = "";
+
+        int size = tablaPersonas.getItems().size();
+        if (size == 0) {
+            Alert alert = new Alert(AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Tabla erronea");
+            alert.setContentText("No hay ningún producto para hacer una factura");
+            alert.showAndWait();
+            return;
+        }
+        for (int i = 0; i < size; i++) {
+            cantidad += tablaPersonas.getItems().get(i).getEdad() + ",";
+            descripcion += tablaPersonas.getItems().get(i).getNombre() + ",";
+            if (tablaPersonas.getItems().get(i).getApellido() == null) {
+                precioytipo += "G" + tablaPersonas.getItems().get(i).getTelefono() + ",";
+            } else {
+                precioytipo += "E" + tablaPersonas.getItems().get(i).getApellido() + ",";
+            }
+        }
+        cantidad = cantidad.substring(0, cantidad.length() - 1);
+        descripcion = descripcion.substring(0, descripcion.length() - 1);
+        precioytipo = precioytipo.substring(0, precioytipo.length() - 1);
+    }
+
+    private boolean validarFecha() {
+
+        System.out.println(fechaCalendario.getValue());
+        System.out.println(LocalDate.now());
+
+        if (fechaCalendario.getValue() == null) {
+            fechaCalendario.setValue(LocalDate.now());
+            return true;
+        }
+        if (!fechaCalendario.getValue().equals(LocalDate.now())) {
+            Alert alert = new Alert(AlertType.CONFIRMATION);
+            alert.setTitle("Ventana de confirmación");
+            alert.setHeaderText("Fecha diferente");
+            alert.setContentText("¿Quieres agregar la factura con una fecha diferente de hoy? (No recomendado)");
+
+            Optional<ButtonType> result = alert.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        return true;
     }
 
     @Override

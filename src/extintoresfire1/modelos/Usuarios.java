@@ -30,22 +30,25 @@ public class Usuarios {
 
     public List<Usuarios> Refrescar() {
 
-        String sql;
+        String sql = null;
 
         List<Usuarios> usuario = new ArrayList<>();
         ResultSet resulL = null;
 
-        if (Conexion.conexionI!=null) {
-            sql = "SELECT id, nombre, contrasena FROM \"Extintores\".usuarios;";
+        if (Conexion.conexionI != null) {
 
-            resulL = Conexion.conexionI.EjecutarConsultaSql(sql, new ArrayList<>());
-        }else{
-        if (Conexion.conexionL!=null) {
+            if (Conexion.conexionI.getDescripcion().equals("El intento de conexión falló.")) {
+
+            } else {
+                sql = "SELECT id, nombre, contrasena FROM \"Extintores\".usuarios;";
+                resulL = Conexion.conexionI.EjecutarConsultaSql(sql, new ArrayList<>());
+            }
+
+        }
+        if (Conexion.conexionL != null) {
             sql = "SELECT id, nombre, contrasena FROM usuarios;";
             resulL = Conexion.conexionL.EjecutarConsultaSql(sql, new ArrayList<>());
         }
-        }
-        
 
         try {
             while (resulL.next()) {
