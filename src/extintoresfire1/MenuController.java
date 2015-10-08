@@ -26,10 +26,10 @@ public class MenuController implements Initializable {
      * @param url
      * @param rb
      */
-    
     @FXML
-    private Button facturacion;
+    private Button facturacion,reportes;
     
+
     @FXML
     private void Facturacion(ActionEvent e) {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -47,7 +47,7 @@ public class MenuController implements Initializable {
         Parent root = null;
         if (result.get() == buttonTypeOne) {
             try {
-                root = FXMLLoader.load(getClass().getResource("Factu.fxml"));
+                root = FXMLLoader.load(getClass().getResource("Factura.fxml"));
             } catch (IOException ex) {
                 Logger.getLogger(ControllerMain.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -61,13 +61,31 @@ public class MenuController implements Initializable {
 
         }
         Stage stages = (Stage) facturacion.getScene().getWindow();
-                stages.close();
-                // la ventana en uso
-                Scene scene = new Scene(root);
-                Stage stage = new Stage();
-                // stage.setTitle("My New Stage Title");
-                stage.setScene(scene);
-                stage.show();
+        stages.close();
+        // la ventana en uso
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        // stage.setTitle("My New Stage Title");
+        stage.setScene(scene);
+        stage.show();
+    }
+
+    @FXML
+    private void Reportes(ActionEvent e) {
+        Parent root = null;
+        try {
+            root = FXMLLoader.load(getClass().getResource("Reporte.fxml"));
+        } catch (IOException ex) {
+            Logger.getLogger(ControllerMain.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        Stage stages = (Stage) reportes.getScene().getWindow();
+        stages.close();
+        // la ventana en uso
+        Scene scene = new Scene(root);
+        Stage stage = new Stage();
+        // stage.setTitle("My New Stage Title");
+        stage.setScene(scene);
+        stage.show();
     }
 
     @Override

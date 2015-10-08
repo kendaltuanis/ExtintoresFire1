@@ -1,7 +1,7 @@
 package extintoresfire1;
 
 import extintoresfire1.BD.ConexionBD;
-import extintoresfire1.Controlador.ControladorUsuarios;
+import extintoresfire1.ControladorBD.ControladorUsuarios;
 import extintoresfire1.modelos.Noticias;
 import extintoresfire1.modelos.Usuarios;
 import java.io.IOException;

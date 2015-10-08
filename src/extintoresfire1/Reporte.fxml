@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.effect.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.embed.swing.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1202.0" prefWidth="797.0" styleClass="pane" stylesheets="@Theme.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="extintoresfire1.ReporteController">
+   <top>
+      <MenuBar fx:id="menu" BorderPane.alignment="CENTER">
+         <menus>
+            <Menu mnemonicParsing="false" text="Menú">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#irMenu" text="Ir a menú" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Reporte">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#nuevaFactura" text="Nueva Reporte" />
+               </items>
+            </Menu>
+            <Menu mnemonicParsing="false" text="Ayuda">
+               <items>
+                  <MenuItem mnemonicParsing="false" text="About" />
+               </items>
+            </Menu>
+         </menus>
+      </MenuBar>
+   </top>
+   <center>
+      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+         <children>
+            <DatePicker fx:id="calendario" promptText="Escoger Fecha">
+               <VBox.margin>
+                  <Insets bottom="10.0" left="449.0" top="10.0" />
+               </VBox.margin>
+            </DatePicker>
+            <TabPane prefHeight="1050.0" prefWidth="797.0" tabClosingPolicy="UNAVAILABLE">
+               <tabs>
+                  <Tab text="Vales">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <ListView layoutX="33.0" layoutY="121.0" prefHeight="273.0" prefWidth="225.0" />
+                              <Label layoutX="45.0" layoutY="60.0" text="Colaboradores">
+                                 <font>
+                                    <Font size="31.0" />
+                                 </font>
+                              </Label>
+                              <TextField layoutX="298.0" layoutY="177.0" prefHeight="50.0" prefWidth="265.0" promptText="VALES">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <TextField layoutX="298.0" layoutY="344.0" prefHeight="50.0" prefWidth="475.0" promptText="DESCRIPCIÓN CARGOS">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font></TextField>
+                              <TextField layoutX="298.0" layoutY="258.0" prefHeight="50.0" prefWidth="265.0" promptText="OTROS CARGOS">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
+                              <Button layoutX="616.0" layoutY="413.0" mnemonicParsing="false" prefHeight="55.0" prefWidth="157.0" text="Agregar">
+                                 <font>
+                                    <Font size="21.0" />
+                                 </font>
+                              </Button>
+                           </children></AnchorPane>
+                     </content>
+                  </Tab>
+                  <Tab text="Reportes/Cierre">
+                     <content>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0" />
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+         </children>
+      </VBox>
+   </center>
+</BorderPane>

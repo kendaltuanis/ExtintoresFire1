@@ -10,8 +10,8 @@ import java.util.List;
 
 public class Creditos {
 
-    String fecha, nombre, empresa, direccion, telefono, producto, precioytipo,  ruta, cantidad, estado,numerocedula;
-    int numerofactura,id;
+    String fecha, nombre, empresa, direccion, telefono, producto, precioytipo, ruta, cantidad, estado, numerocedula;
+    int numerofactura, id;
 
     public Creditos(int id, int numerofactura, String fecha, String nombre, String empresa, String direccion, String numerocedula, String telefono, String cantidad, String producto, String precioytipo, String estado) {
         this.id = id;
@@ -45,7 +45,8 @@ public class Creditos {
 
     public static List<Creditos> Refrescar() {
 
-        String sql = "SELECT id, numerofactura, fecha, nombre, direccion, numerocedula, telefono,cantidad, producto, precioytipo, mediodepago,estado FROM credito;";
+        String sql = "SELECT id, numerofactura, fecha, nombre, empresa, direccion, telefono, cedula, cantidad, producto, precioytipo,estado\n"
+                + "  FROM credito;";
 
         List<Creditos> contados = new ArrayList<>();
         ResultSet resul = Conexion.conexionL.EjecutarConsultaSql(sql, new ArrayList<>());
@@ -57,8 +58,8 @@ public class Creditos {
                         resul.getString("nombre"),
                         resul.getString("empresa"),
                         resul.getString("direccion"),
-                        resul.getString("numerocedula"),
                         resul.getString("telefono"),
+                        resul.getString("cedula"),
                         resul.getString("cantidad"),
                         resul.getString("producto"),
                         resul.getString("precioytipo"),
@@ -93,11 +94,11 @@ public class Creditos {
 
     }
 
-    public void EditarEstado(int id,String estado) { //editar el estado de la factura: "Pago","Pendiente","Nula"
+    public void EditarEstado(int id, String estado) { //editar el estado de la factura: "Pago","Pendiente","Nula"
         String sql = "UPDATE credito SET estado=? WHERE id=?;";
 
         List<ParametroSql> par = new ArrayList<>();
-        
+
         par.add(new ParametroSql(estado, TipoDato.Varchar));
         par.add(new ParametroSql(id, TipoDato.Integer));
 
@@ -112,7 +113,6 @@ public class Creditos {
     public String getPrecioytipo() {
         return precioytipo;
     }
-
 
     public String getEstado() {
         return estado;

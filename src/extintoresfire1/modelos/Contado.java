@@ -47,7 +47,8 @@ public class Contado {
 
     public static List<Contado> Refrescar() {
 
-        String sql = "SELECT id, numerofactura, fecha, nombre, direccion, numerocedula, telefono,cantidad, producto, precioytipo, mediodepago,estado FROM contado;";
+        String sql = "SELECT id, numerofactura, fecha, nombre, empresa, direccion, telefono,cedula, cantidad, producto, precioytipo, mediopago, estado\n" +
+"  FROM contado;";
 
         List<Contado> contados = new ArrayList<>();
         ResultSet resul = Conexion.conexionL.EjecutarConsultaSql(sql, new ArrayList<>());
@@ -59,12 +60,12 @@ public class Contado {
                         resul.getString("nombre"),
                         resul.getString("empresa"),
                         resul.getString("direccion"),
-                        resul.getString("numerocedula"),
+                        resul.getString("cedula"),
                         resul.getString("telefono"),
                         resul.getString("cantidad"),
                         resul.getString("producto"),
                         resul.getString("precioytipo"),
-                        resul.getString("mediodepago"),
+                        resul.getString("mediopago"),
                         resul.getString("estado")
                 ));
 

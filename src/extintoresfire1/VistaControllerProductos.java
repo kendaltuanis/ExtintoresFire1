@@ -1,7 +1,8 @@
 package extintoresfire1;
 
-import extintoresfire1.Controlador.ControladorContado;
-import extintoresfire1.Controlador.ControladorCreditos;
+import extintoresfire1.Impresion.ImpresionContadoCredito;
+import extintoresfire1.ControladorBD.ControladorContado;
+import extintoresfire1.ControladorBD.ControladorCreditos;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -21,6 +22,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
@@ -30,12 +32,15 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.ZoomEvent;
 import javafx.stage.Stage;
 
 public class VistaControllerProductos implements Initializable {
 
     ControladorContado ctrlContado;
     ControladorCreditos ctrlCreditos;
+
+    String[][] products;
 
     String cantidad, descripcion, precioytipo;
 
@@ -55,6 +60,9 @@ public class VistaControllerProductos implements Initializable {
     private DatePicker fechaCalendario;
 
     private int posicionPersonaEnTabla;
+
+    @FXML
+    private Button btnI;
 
     @FXML
     private RadioButton rdbContado, rdbCredito;
@@ -89,7 +97,7 @@ public class VistaControllerProductos implements Initializable {
     private void nuevaFactura(ActionEvent e) {
         Parent root = null;
         try {
-            root = FXMLLoader.load(getClass().getResource("Factu.fxml"));
+            root = FXMLLoader.load(getClass().getResource("Factura.fxml"));
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
@@ -172,7 +180,18 @@ public class VistaControllerProductos implements Initializable {
 
     @FXML
     private void eliminar(ActionEvent event) {
+        int size = tablaPersonas.getItems().size();
+
+        if (tablaPersonas.getItems().get(posicionPersonaEnTabla).getTelefono() == null) {
+            int tot = Integer.parseInt(txtTotal.getText())-Integer.parseInt(tablaPersonas.getItems().get(posicionPersonaEnTabla).getApellido());
+            txtTotal.setText(String.valueOf(tot));
+        }else{
+            int tot = Integer.parseInt(txtTotal.getText())-Integer.parseInt(tablaPersonas.getItems().get(posicionPersonaEnTabla).getTelefono());
+            txtTotal.setText(String.valueOf(tot));
+        }
         productos.remove(posicionPersonaEnTabla);
+        
+
     }
     /**
      * Listener de la tabla productos
@@ -272,7 +291,7 @@ public class VistaControllerProductos implements Initializable {
         );
         cbmDescripcion.getItems().addAll(
                 "Ext ABC 4kg", "Ext ABC 2kg", "Ext ABC 1kg", "Ext BC 4.5kg", "RepExtABC 10lbs", "RepExtABC 5lbs", "RepExtABC 2.2lbs", "RepExtABC 20lbs", "RepExtABC 15lbs",
-                "RecExtBC 10lbs", "RecExtBC 20lbs", "RecExtBC 15lbs", "RecExtBC 5lbs", "ManBC 10lbs", "ManBC 20lbs", "ManBC 5lbs", "ManBC 15lbs", "RepExtAFFF 20lbs", "RepExtAFFF 10lbs"
+                "RepExtBC 10lbs", "RepExtBC 20lbs", "RepExtBC 15lbs", "RepExtBC 5lbs", "Prueba H", "Rotulo", "Gancho", "Manguera", "Manómetro", "ManBC 10lbs", "ManBC 20lbs", "ManBC 5lbs", "ManBC 15lbs", "RepExtAFFF 20lbs", "RepExtAFFF 10lbs"
         );
         cmbTipoPago.getItems().addAll("Efectivo", "Transferencia/Depósito", "Cheque");
 
@@ -296,6 +315,12 @@ public class VistaControllerProductos implements Initializable {
                 ctrlContado.Insertar(fechaCalendario.getValue().toString(), txtNombre.getText(),
                         txtEmpresa.getText(), txtDireccion.getText(), txtCedula.getText(),
                         txtTelefono.getText(), cantidad, descripcion, precioytipo, cmbTipoPago.getValue().toString());
+                btnI.setDisable(false);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Factura");
+                alert.setHeaderText(null);
+                alert.setContentText("Factura agregada");
+                alert.showAndWait();
                 return;
             } else {
                 ctrlCreditos = new ControladorCreditos();
@@ -303,7 +328,12 @@ public class VistaControllerProductos implements Initializable {
                 ctrlCreditos.Insertar(fechaCalendario.getValue().toString(), txtNombre.getText(),
                         txtEmpresa.getText(), txtDireccion.getText(), txtCedula.getText(),
                         txtTelefono.getText(), cantidad, descripcion, precioytipo);
-
+                btnI.setDisable(false);
+                Alert alert = new Alert(AlertType.INFORMATION);
+                alert.setTitle("Factura");
+                alert.setHeaderText(null);
+                alert.setContentText("Factura agregada");
+                alert.showAndWait();
                 return;
             }
 
@@ -314,6 +344,55 @@ public class VistaControllerProductos implements Initializable {
             alert.setHeaderText("Método de pago");
             alert.setContentText("Selecciona el método de pago");
             alert.showAndWait();
+        }
+
+    }
+
+    @FXML
+    private void Imprimir(ActionEvent e) {
+
+        ImpresionContadoCredito impresion = new ImpresionContadoCredito();
+        impresion.TituloFactura();
+        impresion.DatosCliente(fechaCalendario.getValue().toString(), txtNombre.getText(),
+                txtEmpresa.getText(), txtDireccion.getText(), txtTelefono.getText(), txtCedula.getText());
+        CargarProductosImpresion();
+        impresion.ProductosFactura(products);
+        impresion.DatosFinalFactura(txtTotal.getText());
+        if (rdbContado.isSelected()) {
+            impresion.tipoFactura("Contado");
+        } else {
+            impresion.tipoFactura("Credito");
+        }
+        impresion.Imprimir();
+
+    }
+
+    private void CargarProductosImpresion() {
+        products = new String[20][4];
+
+        int size = tablaPersonas.getItems().size();
+
+        for (int i = 0; i < size; i++) {
+            for (int j = 0; j < 4; j++) {
+                try {
+                    if (j == 0) {
+                        products[i][j] = tablaPersonas.getItems().get(i).getEdad().toString();
+                    }
+                    if (j == 1) {
+                        products[i][j] = tablaPersonas.getItems().get(i).getNombre();
+                    }
+                    if (j == 2) {
+                        products[i][j] = tablaPersonas.getItems().get(i).getApellido();
+                    }
+                    if (j == 3) {
+                        products[i][j] = tablaPersonas.getItems().get(i).getTelefono();
+                    }
+
+                } catch (Exception e) {
+                    System.out.println(e.getMessage());
+                    return;
+                }
+            }
         }
 
     }
@@ -377,7 +456,7 @@ public class VistaControllerProductos implements Initializable {
 
         // Inicializamos la tabla
         this.inicializarTablaPersonas();
-
+   
         inicializarComboBoxs();
 
         // Solo números en los textfield
