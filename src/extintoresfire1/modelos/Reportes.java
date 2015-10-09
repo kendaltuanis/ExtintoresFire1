@@ -34,29 +34,9 @@ public class Reportes {
         this.realizoconrebajas = realizoconrebajas;
     }
 
-    public void Insertar(String ruta) {
+    public void Insertar() {
 
-        StringBuilder sql = new StringBuilder();
-
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("INSERT INTO reportessancarlos(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
-                break;
-            case "GrupoAlajuela":
-                sql.append("INSERT INTO reportesalajuela(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
-                break;
-            case "GrupoLiberia":
-                sql.append("INSERT INTO reportesliberia(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
-                break;
-            case "GrupoGuapiles":
-                sql.append("INSERT INTO reportesguapiles(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("INSERT INTO reportesrefuerzo(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
-                break;
-
-        }
+        String sql="INSERT INTO reportes(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);";
 
         List<ParametroSql> par = new ArrayList<>();
         par.add(new ParametroSql(fecha, TipoDato.Varchar));
@@ -67,35 +47,15 @@ public class Reportes {
         par.add(new ParametroSql(realizosinrebajas, TipoDato.Integer));
         par.add(new ParametroSql(realizoconrebajas, TipoDato.Integer));
 
-        Conexion.conexionL.EjecutarSql((sql.toString()), par);
+        Conexion.conexionL.EjecutarSql(sql, par);
 
     }
 
-    public static List<Reportes> Refrescar(String ruta) {
-        StringBuilder sql = new StringBuilder();
-
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportessancarlos;");
-                break;
-            case "GrupoAlajuela":
-                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesalajuela;");
-                break;
-            case "GrupoLiberia":
-                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesliberia;");
-                break;
-            case "GrupoGuapiles":
-                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesguapiles;");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("SELECT id, fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesrefuerzo;");
-                break;
-
-        }
+    public static List<Reportes> Refrescar() {
+        String sql="SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportes;";
 
         List<Reportes> reportes = new ArrayList<>();
-        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql((sql.toString()), new ArrayList<>());
+        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql(sql, new ArrayList<>());
         try {
             while (resul.next()) {
                 reportes.add(new Reportes(resul.getInt("id"),

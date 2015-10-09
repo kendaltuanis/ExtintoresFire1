@@ -4,8 +4,10 @@ import com.sun.javafx.scene.control.skin.DatePickerContent;
 import com.sun.javafx.scene.control.skin.DatePickerSkin;
 import extintoresfire1.ControladorBD.ControladorAbonos;
 import extintoresfire1.ControladorBD.ControladorContado;
+import extintoresfire1.ControladorBD.ControladorVales;
 import extintoresfire1.modelos.Abonos;
 import extintoresfire1.modelos.Contado;
+import extintoresfire1.modelos.Vales;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -63,9 +65,9 @@ public class ReporteController implements Initializable {
     private TableView<String> tablasVales;
     @FXML
     private TextField txtVales, txtOtrosCargos, txtDescripcionCargos, txtGasto, txtDescripcionGasto,
-            txtPagoCredito, txtEfectivo, txtDeposito, txtCheque, txtRealizoTotalSin, txtRealizoTotal, txtVale, txtNumeroReciboGasto;
+            txtPagoCredito, txtEfectivo, txtDeposito, txtCheque, txtRealizoTotalSin, txtRealizoTotal,txtNumeroReciboGasto;
 
-    int efectivo, deposito, cheque, realizoTotal = 0, realizoTotalSinGastos;
+    int efectivo, deposito, cheque,gastos=0;
     @FXML
     private TextArea notaExtra;
     @FXML
@@ -131,7 +133,11 @@ public class ReporteController implements Initializable {
             re.descripcion.setValue(txtDescripcionGasto.getText());
             re.numeroRecibo.setValue(txtNumeroReciboGasto.getText());
             data.add(re);
-            txtEfectivo.setText(String.valueOf((Integer.parseInt(txtEfectivo.getText()) - Integer.parseInt(txtGasto.getText()))));
+            gastos+=Integer.parseInt(txtGasto.getText());
+            efectivo-=Integer.parseInt(txtGasto.getText());
+            txtEfectivo.setText(String.valueOf(efectivo));
+            int total=efectivo+deposito+cheque;
+            txtRealizoTotal.setText(String.valueOf(total));
             txtGasto.clear();
             txtDescripcionGasto.clear();
             txtNumeroReciboGasto.clear();
@@ -143,8 +149,25 @@ public class ReporteController implements Initializable {
             alert.showAndWait();
         }
     }
-
     
+    @FXML private void AgregarVales(ActionEvent e){
+        ControladorVales vales = new ControladorVales();
+        vales.Insertar(LocalDate.now().toString(), listaColaboladores.getSelectionModel().getSelectedItem(), Integer.parseInt(txtVales.getText()), txtDescripcionCargos.getText(), Integer.parseInt(txtOtrosCargos.getText()));
+        DatosFacturas();
+        efectivo-=gastos;
+        AgregarAbonos();
+        RestarVales();
+        txtVales.clear();
+        txtDescripcionCargos.clear();
+        txtOtrosCargos.clear();
+        
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Agregado");
+            alert.setHeaderText("Vales");
+            alert.setContentText("Vale agregado");
+            alert.showAndWait();
+    }
+
     private void DatosFacturas() {
         efectivo = 0;
         deposito = 0;
@@ -152,7 +175,7 @@ public class ReporteController implements Initializable {
         ControladorContado ctrlContado = new ControladorContado();
         List<Contado> contados = ctrlContado.Refrescar();
         for (Contado contado : contados) {
-            if (contado.getFecha().equals(LocalDate.now())) {
+            if (contado.getFecha().equals(LocalDate.now().toString())) {
                 if (!contado.getEstado().equals("Nula")) {
                     String[] montoFacturas = contado.getPrecioytipo().split(",");
                     if (contado.getMediodepago().equals("Efectivo")) {
@@ -179,14 +202,13 @@ public class ReporteController implements Initializable {
 
     }
 
-    
     private void AgregarAbonos() {
 
         int creditos = 0;
         ControladorAbonos ctrlAbonos = new ControladorAbonos();
         List<Abonos> abonos = ctrlAbonos.Refrescar();
         for (Abonos abono : abonos) {
-            if (abono.getFecha().equals(LocalDate.now())) {
+            if (abono.getFecha().equals(LocalDate.now().toString())) {
                 if (!abono.getEstado().equals("Nula")) {
 
                     if (abono.getMediodepago().equals("Efectivo")) {
@@ -208,9 +230,26 @@ public class ReporteController implements Initializable {
         int totall = efectivo + deposito + cheque;
         txtRealizoTotalSin.setText(String.valueOf(totall));
         txtPagoCredito.setText(String.valueOf(creditos));
-        efectivo=0;
-        deposito=0;
-        cheque=0;
+    }
+
+    private void RestarVales() {
+        int valesTotal = 0;
+        ControladorVales ctrlVales = new ControladorVales();
+        List<Vales> vales = ctrlVales.Refrescar();
+        for (Vales vale : vales) {
+            if (vale.getFecha().equals(LocalDate.now().toString())) {
+                valesTotal += vale.getVale();
+                valesTotal+=vale.getOtroscargos();
+            }
+
+        }
+
+        efectivo -= valesTotal;
+
+        txtEfectivo.setText(String.valueOf(efectivo));
+
+        int totall = efectivo + deposito + cheque;
+        txtRealizoTotal.setText(String.valueOf(totall));
     }
 
     private void Calendario() {
@@ -328,9 +367,9 @@ public class ReporteController implements Initializable {
         listaColaboladores.setItems(listItems);
         data = FXCollections.observableArrayList();
         tablaGastos.setItems(data);
-        calendario.setValue(LocalDate.now());
         DatosFacturas();
         AgregarAbonos();
+        RestarVales();
 
     }
 

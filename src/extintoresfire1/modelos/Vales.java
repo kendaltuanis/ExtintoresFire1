@@ -31,31 +31,11 @@ public class Vales {
         this.otroscargos = otroscargos;
     }
 
-    public static List<Vales> Refrescar(String ruta) {
+    public static List<Vales> Refrescar() {
 
-        StringBuilder sql = new StringBuilder();
-
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("SELECT id, fecha, empleado, vale, descripcion, otroscargos FROM valessancarlos;");
-                break;
-            case "GrupoAlajuela":
-                sql.append("SELECT id, fecha, empleado, vale, descripcion, otroscargos FROM valesalajuela;");
-                break;
-            case "GrupoLiberia":
-                sql.append("SELECT id, fecha, empleado, vale, descripcion, otroscargos FROM valesliberia;");
-                break;
-            case "GrupoGuapiles":
-                sql.append("SELECT id, fecha, empleado, vale, descripcion, otroscargos FROM valesguapiles;");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("SELECT id, fecha, empleado, vale, descripcion, otroscargos FROM valesrefuerzo;");
-                break;
-
-        }
+        String sql="SELECT id, fecha, empleado, vale, descripcion, otroscargos FROM vales;";
         List<Vales> vales = new ArrayList<>();
-        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql((sql.toString()), new ArrayList<>());
+        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql(sql, new ArrayList<>());
         try {
             while (resul.next()) {
                 vales.add(new Vales(resul.getInt("id"),
@@ -74,28 +54,9 @@ public class Vales {
 
     }
 
-    public void Insertar(String ruta) {
+    public void Insertar() {
 
-        StringBuilder sql = new StringBuilder();
-
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("INSERT INTO valessancarlos(fecha, empleado, vale, descripcion, otroscargos)VALUES (?, ?, ?, ?, ?);");
-                break;
-            case "GrupoAlajuela":
-                sql.append("INSERT INTO valesalajuela(fecha, empleado, vale, descripcion, otroscargos)VALUES (?, ?, ?, ?, ?);");
-                break;
-            case "GrupoLiberia":
-                sql.append("INSERT INTO valesliberia(fecha, empleado, vale, descripcion, otroscargos)VALUES (?, ?, ?, ?, ?);");
-                break;
-            case "GrupoGuapiles":
-                sql.append("INSERT INTO valesguapiles(fecha, empleado, vale, descripcion, otroscargos)VALUES (?, ?, ?, ?, ?);");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("INSERT INTO valesrefuerzo(fecha, empleado, vale, descripcion, otroscargos)VALUES (?, ?, ?, ?, ?);");
-                break;
-        }
+        String sql="INSERT INTO vales(fecha, empleado, vale, descripcion, otroscargos)VALUES (?, ?, ?, ?, ?);";
 
         List<ParametroSql> par = new ArrayList<>();
         par.add(new ParametroSql(fecha, TipoDato.Varchar));
@@ -104,7 +65,7 @@ public class Vales {
         par.add(new ParametroSql(descripcion, TipoDato.Varchar));
         par.add(new ParametroSql(otroscargos, TipoDato.Integer));
 
-        Conexion.conexionL.EjecutarSql((sql.toString()), par);
+        Conexion.conexionL.EjecutarSql(sql, par);
 
     }
 
