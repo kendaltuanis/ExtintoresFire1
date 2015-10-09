@@ -1,0 +1,139 @@
+package extintoresfire1.modelos;
+
+import Datos.Conexion;
+import Datos.ParametroSql;
+import Datos.TipoDato;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+public class Reportes {
+
+    String fecha, ruta, gastos, numerorecibo, descripcion, notaextra;
+    int id, realizosinrebajas, realizoconrebajas;
+
+    public Reportes(int id, String fecha, String gastos, String numerorecibo, String descripcion, String notaextra, int realizosinrebajas, int realizoconrebajas) {
+        this.id = id;
+        this.fecha = fecha;
+        this.gastos = gastos;
+        this.numerorecibo = numerorecibo;
+        this.descripcion = descripcion;
+        this.notaextra = notaextra;
+        this.realizosinrebajas = realizosinrebajas;
+        this.realizoconrebajas = realizoconrebajas;
+    }
+
+    public Reportes(String fecha, String gastos, String numerorecibo, String descripcion, String notaextra, int realizosinrebajas, int realizoconrebajas) {
+        this.fecha = fecha;
+        this.gastos = gastos;
+        this.numerorecibo = numerorecibo;
+        this.descripcion = descripcion;
+        this.notaextra = notaextra;
+        this.realizosinrebajas = realizosinrebajas;
+        this.realizoconrebajas = realizoconrebajas;
+    }
+
+    public void Insertar(String ruta) {
+
+        StringBuilder sql = new StringBuilder();
+
+        switch (ruta) {
+
+            case "GrupoSanCarlos":
+                sql.append("INSERT INTO reportessancarlos(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
+                break;
+            case "GrupoAlajuela":
+                sql.append("INSERT INTO reportesalajuela(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
+                break;
+            case "GrupoLiberia":
+                sql.append("INSERT INTO reportesliberia(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
+                break;
+            case "GrupoGuapiles":
+                sql.append("INSERT INTO reportesguapiles(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
+                break;
+            case "GrupoRefuerzo":
+                sql.append("INSERT INTO reportesrefuerzo(fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas) VALUES (?,?, ?, ?, ?, ?,?);");
+                break;
+
+        }
+
+        List<ParametroSql> par = new ArrayList<>();
+        par.add(new ParametroSql(fecha, TipoDato.Varchar));
+        par.add(new ParametroSql(gastos, TipoDato.Varchar));
+        par.add(new ParametroSql(numerorecibo, TipoDato.Varchar));
+        par.add(new ParametroSql(descripcion, TipoDato.Varchar));
+        par.add(new ParametroSql(notaextra, TipoDato.Varchar));
+        par.add(new ParametroSql(realizosinrebajas, TipoDato.Integer));
+        par.add(new ParametroSql(realizoconrebajas, TipoDato.Integer));
+
+        Conexion.conexionL.EjecutarSql((sql.toString()), par);
+
+    }
+
+    public static List<Reportes> Refrescar(String ruta) {
+        StringBuilder sql = new StringBuilder();
+
+        switch (ruta) {
+
+            case "GrupoSanCarlos":
+                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportessancarlos;");
+                break;
+            case "GrupoAlajuela":
+                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesalajuela;");
+                break;
+            case "GrupoLiberia":
+                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesliberia;");
+                break;
+            case "GrupoGuapiles":
+                sql.append("SELECT id,fecha, gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesguapiles;");
+                break;
+            case "GrupoRefuerzo":
+                sql.append("SELECT id, fecha,gastos, numerorecibo, descripcion, notaextra, realizosinrebajas,realizoconrebajas FROM reportesrefuerzo;");
+                break;
+
+        }
+
+        List<Reportes> reportes = new ArrayList<>();
+        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql((sql.toString()), new ArrayList<>());
+        try {
+            while (resul.next()) {
+                reportes.add(new Reportes(resul.getInt("id"),
+                        resul.getString("fecha"),
+                        resul.getString("gastos"),
+                        resul.getString("numerorecibo"),
+                        resul.getString("descripcion"),
+                        resul.getString("notaextra"),
+                        resul.getInt("realizosinrebajas"),
+                        resul.getInt("realizoconrebajas")
+                ));
+
+            }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        return reportes;
+    }
+
+    public String getGastos() {
+        return gastos;
+    }
+
+    public int getRealizosinrebajas() {
+        return realizosinrebajas;
+    }
+
+    public int getRealizoconrebajas() {
+        return realizoconrebajas;
+    }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public String getDescripcion() {
+        return descripcion;
+    }
+    
+
+}

@@ -64,7 +64,8 @@
                               <TextField layoutX="294.0" layoutY="387.0" prefHeight="50.0" prefWidth="475.0" promptText="DESCRIPCIÓN CARGOS">
                                  <font>
                                     <Font size="21.0" />
-                                 </font></TextField>
+                                 </font>
+                              </TextField>
                               <TextField layoutX="294.0" layoutY="301.0" prefHeight="50.0" prefWidth="265.0" promptText="OTROS CARGOS">
                                  <font>
                                     <Font size="20.0" />
@@ -87,7 +88,8 @@
                                     <Font size="21.0" />
                                  </font>
                               </Button>
-                           </children></AnchorPane>
+                           </children>
+                        </AnchorPane>
                      </content>
                   </Tab>
                   <Tab text="Reportes/Cierre">
@@ -104,7 +106,7 @@
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <TextField fx:id="txtDescripcionGasto" layoutX="40.0" layoutY="250.0" prefHeight="50.0" prefWidth="341.0" promptText="DESCRIPCIÓN GASTO">
+                              <TextField fx:id="txtNumeroReciboGasto" layoutX="40.0" layoutY="316.0" prefHeight="50.0" prefWidth="266.0" promptText="NUMERO RECIBO">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -114,13 +116,13 @@
                                     <Font size="21.0" />
                                  </font>
                               </Button>
-                              <TextArea layoutX="44.0" layoutY="400.0" prefHeight="134.0" prefWidth="340.0" promptText="NOTA EXTRA (no necesaria)">
+                              <TextArea fx:id="notaExtra" layoutX="44.0" layoutY="400.0" prefHeight="134.0" prefWidth="340.0" promptText="NOTA EXTRA (no necesaria)">
                                  <font>
                                     <Font size="21.0" />
                                  </font>
                               </TextArea>
                               <Separator layoutX="11.0" layoutY="377.0" prefHeight="17.0" prefWidth="797.0" />
-                              <TextField editable="false" layoutX="48.0" layoutY="701.0" prefHeight="50.0" prefWidth="222.0">
+                              <TextField fx:id="txtEfectivo" editable="false" layoutX="48.0" layoutY="701.0" prefHeight="50.0" prefWidth="222.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -135,7 +137,7 @@
                                     <Font size="31.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" layoutX="530.0" layoutY="574.0" prefHeight="50.0" prefWidth="222.0">
+                              <TextField fx:id="txtPagoCredito" editable="false" layoutX="530.0" layoutY="574.0" prefHeight="50.0" prefWidth="222.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -145,7 +147,7 @@
                                     <Font size="31.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" layoutX="290.0" layoutY="702.0" prefHeight="50.0" prefWidth="222.0">
+                              <TextField fx:id="txtDeposito" editable="false" layoutX="290.0" layoutY="702.0" prefHeight="50.0" prefWidth="222.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -155,7 +157,7 @@
                                     <Font size="31.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" layoutX="533.0" layoutY="703.0" prefHeight="50.0" prefWidth="222.0">
+                              <TextField fx:id="txtCheque" editable="false" layoutX="533.0" layoutY="703.0" prefHeight="50.0" prefWidth="222.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -165,7 +167,7 @@
                                     <Font size="21.0" />
                                  </font>
                               </Button>
-                              <TextField editable="false" layoutX="537.0" layoutY="845.0" prefHeight="50.0" prefWidth="222.0">
+                              <TextField fx:id="txtRealizoTotal" editable="false" layoutX="537.0" layoutY="845.0" prefHeight="50.0" prefWidth="222.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
@@ -180,17 +182,23 @@
                                     <Font size="31.0" />
                                  </font>
                               </Label>
-                              <TextField editable="false" layoutX="51.0" layoutY="848.0" prefHeight="50.0" prefWidth="222.0">
+                              <TextField fx:id="txtRealizoTotalSin" editable="false" layoutX="51.0" layoutY="848.0" prefHeight="50.0" prefWidth="222.0">
                                  <font>
                                     <Font size="20.0" />
                                  </font>
                               </TextField>
-                              <TableView fx:id="tablaGastos" layoutX="427.0" layoutY="132.0" prefHeight="236.0" prefWidth="344.0">
+                              <TableView fx:id="tablaGastos" layoutX="340.0" layoutY="132.0" prefHeight="236.0" prefWidth="431.0">
                                 <columns>
-                                  <TableColumn fx:id="columnaGasto" prefWidth="113.33331298828125" text="Gasto" />
-                                  <TableColumn fx:id="columnaDescripcion" prefWidth="216.33331298828125" text="Descripción" />
+                                  <TableColumn fx:id="columnaGasto" prefWidth="106.0" text="Gasto" />
+                                  <TableColumn fx:id="columnaDescripcion" minWidth="0.0" prefWidth="199.0" text="Descripción" />
+                                    <TableColumn fx:id="columnaNumeroRecibo" prefWidth="117.0" text="N° Recibo" />
                                 </columns>
                               </TableView>
+                              <TextField fx:id="txtDescripcionGasto1" layoutX="40.0" layoutY="250.0" prefHeight="50.0" prefWidth="265.0" promptText="DESCRIPCIÓN GASTO">
+                                 <font>
+                                    <Font size="20.0" />
+                                 </font>
+                              </TextField>
                            </children></AnchorPane>
                      </content>
                   </Tab>

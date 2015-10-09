@@ -51,14 +51,7 @@ public class ReporteController implements Initializable {
      */
     public SimpleIntegerProperty gasto = new SimpleIntegerProperty();
     public SimpleStringProperty descripcion = new SimpleStringProperty();
-
-    public int getGasto() {
-        return gasto.get();
-    }
-
-    public String getDescripcion() {
-        return descripcion.get();
-    }
+    public SimpleStringProperty numeroRecibo = new SimpleStringProperty();
 
     @FXML
     private DatePicker calendario;
@@ -70,15 +63,17 @@ public class ReporteController implements Initializable {
     private TableView<String> tablasVales;
     @FXML
     private TextField txtVales, txtOtrosCargos, txtDescripcionCargos, txtGasto, txtDescripcionGasto,
-            txtPagoCredito, txtEfectivo, txtDeposito, txtCheque, txtRealizoTotalSin, txtRealizoTotal, txtVale;
+            txtPagoCredito, txtEfectivo, txtDeposito, txtCheque, txtRealizoTotalSin, txtRealizoTotal, txtVale, txtNumeroReciboGasto;
 
-    int efectivo=0, deposito=0, cheque=0, realizoTotal=0, realiztoTotalSinGastos = 0;
+    int efectivo, deposito, cheque, realizoTotal = 0, realizoTotalSinGastos;
     @FXML
     private TextArea notaExtra;
     @FXML
     TableColumn columnaGasto;
     @FXML
     TableColumn columnaDescripcion;
+    @FXML
+    TableColumn columnaNumeroRecibo;
 
     @FXML
     private Button btnAgregarGasto, btnAgregarVale, btnCerrarDia, btnVerVales;
@@ -134,54 +129,64 @@ public class ReporteController implements Initializable {
             ReporteController re = new ReporteController();
             re.gasto.setValue(Integer.parseInt(txtGasto.getText()));
             re.descripcion.setValue(txtDescripcionGasto.getText());
+            re.numeroRecibo.setValue(txtNumeroReciboGasto.getText());
             data.add(re);
+            txtEfectivo.setText(String.valueOf((Integer.parseInt(txtEfectivo.getText()) - Integer.parseInt(txtGasto.getText()))));
             txtGasto.clear();
             txtDescripcionGasto.clear();
+            txtNumeroReciboGasto.clear();
         } catch (Exception ex) {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Error");
             alert.setHeaderText("Datos erroneos");
-            alert.setContentText("No hay ningún dato para agregar");
+            alert.setContentText("Falta algún dato para agregar");
             alert.showAndWait();
         }
     }
 
-    @FXML
-    private void DatosFacturas(ActionEvent e) {
-
+    
+    private void DatosFacturas() {
+        efectivo = 0;
+        deposito = 0;
+        cheque = 0;
         ControladorContado ctrlContado = new ControladorContado();
         List<Contado> contados = ctrlContado.Refrescar();
         for (Contado contado : contados) {
-            if (contado.getFecha().equals(calendario.getValue())) {
+            if (contado.getFecha().equals(LocalDate.now())) {
                 if (!contado.getEstado().equals("Nula")) {
                     String[] montoFacturas = contado.getPrecioytipo().split(",");
                     if (contado.getMediodepago().equals("Efectivo")) {
                         for (String montoFactura : montoFacturas) {
                             efectivo += Integer.parseInt(montoFactura.substring(1, montoFactura.length()));
-                        }                     
+                        }
                     }
                     if (contado.getMediodepago().equals("Deposito")) {
                         for (String montoFactura : montoFacturas) {
                             deposito += Integer.parseInt(montoFactura.substring(1, montoFactura.length()));
-                        } 
+                        }
                     }
                     if (contado.getMediodepago().equals("Cheque")) {
                         for (String montoFactura : montoFacturas) {
                             cheque += Integer.parseInt(montoFactura.substring(1, montoFactura.length()));
-                        } 
+                        }
                     }
                 }
             }
         }
+        txtEfectivo.setText(String.valueOf(efectivo));
+        txtDeposito.setText(String.valueOf(deposito));
+        txtCheque.setText(String.valueOf(cheque));
+
     }
-    @FXML
-    private void AgregarAbonos(ActionEvent e) {
+
+    
+    private void AgregarAbonos() {
 
         int creditos = 0;
         ControladorAbonos ctrlAbonos = new ControladorAbonos();
         List<Abonos> abonos = ctrlAbonos.Refrescar();
         for (Abonos abono : abonos) {
-            if (abono.getFecha().equals(calendario.getValue())) {
+            if (abono.getFecha().equals(LocalDate.now())) {
                 if (!abono.getEstado().equals("Nula")) {
 
                     if (abono.getMediodepago().equals("Efectivo")) {
@@ -200,9 +205,12 @@ public class ReporteController implements Initializable {
             }
 
         }
+        int totall = efectivo + deposito + cheque;
+        txtRealizoTotalSin.setText(String.valueOf(totall));
         txtPagoCredito.setText(String.valueOf(creditos));
-        
-
+        efectivo=0;
+        deposito=0;
+        cheque=0;
     }
 
     private void Calendario() {
@@ -314,12 +322,28 @@ public class ReporteController implements Initializable {
         Calendario();
         columnaDescripcion.setCellValueFactory(new PropertyValueFactory<ReporteController, String>("descripcion"));
         columnaGasto.setCellValueFactory(new PropertyValueFactory<ReporteController, Integer>("gasto"));
+        columnaNumeroRecibo.setCellValueFactory(new PropertyValueFactory<ReporteController, String>("numeroRecibo"));
 
         final ObservableList<String> listItems = FXCollections.observableArrayList("Eladio", "David");
         listaColaboladores.setItems(listItems);
         data = FXCollections.observableArrayList();
         tablaGastos.setItems(data);
+        calendario.setValue(LocalDate.now());
+        DatosFacturas();
+        AgregarAbonos();
 
+    }
+
+    public int getGasto() {
+        return gasto.get();
+    }
+
+    public String getDescripcion() {
+        return descripcion.get();
+    }
+
+    public String getNumeroRecibo() {
+        return numeroRecibo.get();
     }
 
 }
