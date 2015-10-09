@@ -5,19 +5,19 @@ import java.util.List;
 
 public class ControladorAbonos {
 
-    public List<Abonos> Refrescar(String ruta) {
-        return Abonos.Refrescar(ruta);
+    public List<Abonos> Refrescar() {
+        return Abonos.Refrescar();
     }
 
-    public void Insertar(String ruta, String fecha, int numerofactura, String recibidode, String concepto, int abono, String mediodepago) {
+    public void Insertar(String fecha, int numerofactura, String recibidode, String concepto, int abono, String mediodepago) {
 
         Abonos abonos = new Abonos(fecha, numerofactura, recibidode, concepto, abono, mediodepago);
-        abonos.Insertar(ruta);
+        abonos.Insertar();
     }
     
-     public void EditarEstado(String ruta, int id, String estado) {
+     public void EditarEstado( int id, String estado) {
         Abonos contadoEstado = new Abonos();
-        contadoEstado.Editar(ruta, id, estado);
+        contadoEstado.Editar(id, estado);
     }
 
 }

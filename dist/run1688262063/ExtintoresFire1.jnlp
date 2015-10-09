@@ -8,7 +8,7 @@
   </information>
   <resources>
     <j2se version="1.6+" href="http://java.sun.com/products/autodl/j2se"/>
-    <jar href="ExtintoresFire1.jar" size="1478591" download="eager" />
+    <jar href="ExtintoresFire1.jar" size="1478575" download="eager" />
     <jar href="lib/NewDatos.jar" size="13089" download="eager" />
     <jar href="lib/postgresql-9.2-1002.jdbc4.jar" size="571894" download="eager" />
   </resources>

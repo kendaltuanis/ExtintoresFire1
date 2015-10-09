@@ -1,4 +1,4 @@
-package extintoresfire1;
+    package extintoresfire1;
 
 import java.io.IOException;
 import java.net.URL;

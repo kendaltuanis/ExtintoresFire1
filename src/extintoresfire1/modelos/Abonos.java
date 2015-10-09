@@ -10,10 +10,10 @@ import java.util.List;
 
 public class Abonos {
 
-    String fecha, ruta, recibidode, concepto, mediodepago,estado;
+    String fecha, ruta, recibidode, concepto, mediodepago, estado;
     int id, numerofactura, abono, numerorecibo;
 
-    public Abonos(int id, int numerorecibo, String fecha, int numerofactura, String recibidode, String concepto, int abono, String mediodepago,String estado) {
+    public Abonos(int id, int numerorecibo, String fecha, int numerofactura, String recibidode, String concepto, int abono, String mediodepago, String estado) {
         this.id = id;
         this.numerorecibo = numerorecibo;
         this.fecha = fecha;
@@ -22,7 +22,7 @@ public class Abonos {
         this.concepto = concepto;
         this.abono = abono;
         this.mediodepago = mediodepago;
-        this.estado=estado;
+        this.estado = estado;
 
     }
 
@@ -38,35 +38,13 @@ public class Abonos {
 
     public Abonos() {
     }
-    
-    
 
-    public static List<Abonos> Refrescar(String ruta) {
+    public static List<Abonos> Refrescar() {
 
-        StringBuilder sql = new StringBuilder();
-
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("SELECT id, numerorecibo, fecha, numerofactura, recibidode, concepto,abono, mediodepago,estado FROM abonossancarlos;");
-                break;
-            case "GrupoAlajuela":
-                sql.append("SELECT id, numerorecibo, fecha, numerofactura, recibidode, concepto,abono, mediodepago,estado FROM abonosalajuela;");
-                break;
-            case "GrupoLiberia":
-                sql.append("SELECT id, numerorecibo, fecha, numerofactura, recibidode, concepto,abono, mediodepago,estado FROM abonosliberia;");
-                break;
-            case "GrupoGuapiles":
-                sql.append("SELECT id, numerorecibo, fecha, numerofactura, recibidode, concepto,abono, mediodepago,estado FROM abonosguapiles;");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("SELECT id, numerorecibo, fecha, numerofactura, recibidode, concepto,abono, mediodepago,estado FROM abonosrefuerzo;");
-                break;
-
-        }
+        String sql = "SELECT id, numerorecibo, fecha, numerofactura, recibidode, concepto,abono, mediodepago, estado FROM abonos;";
 
         List<Abonos> abonos = new ArrayList<>();
-        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql((sql.toString()), new ArrayList<>());
+        ResultSet resul = Conexion.conexionL.EjecutarConsultaSql(sql, new ArrayList<>());
         try {
             while (resul.next()) {
                 abonos.add(new Abonos(resul.getInt("id"),
@@ -88,27 +66,9 @@ public class Abonos {
 
     }
 
-    public void Insertar(String ruta) {
-        StringBuilder sql = new StringBuilder();
-
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("INSERT INTO abonossancarlos(fecha, numerofactura, recibidode, concepto,abono, mediodepago) VALUES (?, ?, ?, ?, ?, ?);");
-                break;
-            case "GrupoAlajuela":
-                sql.append("INSERT INTO abonosalajuela(fecha, numerofactura, recibidode, concepto,abono, mediodepago) VALUES (?, ?, ?, ?, ?, ?);");
-                break;
-            case "GrupoLiberia":
-                sql.append("INSERT INTO abonosliberia(fecha, numerofactura, recibidode, concepto,abono, mediodepago) VALUES (?, ?, ?, ?, ?, ?);");
-                break;
-            case "GrupoGuapiles":
-                sql.append("INSERT INTO abonosguapiles(fecha, numerofactura, recibidode, concepto,abono, mediodepago) VALUES (?, ?, ?, ?, ?, ?);");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("INSERT INTO abonosrefuerzo(fecha, numerofactura, recibidode, concepto,abono, mediodepago) VALUES (?, ?, ?, ?, ?, ?);");
-                break;
-        }
+    public void Insertar() {
+        String sql = "INSERT INTO abonos(fecha, numerofactura, recibidode, concepto,abono, mediodepago)\n"
+                + "    VALUES (?, ?, ?, ?, ?, ?);";
 
         List<ParametroSql> par = new ArrayList<>();
         par.add(new ParametroSql(fecha, TipoDato.Varchar));
@@ -118,38 +78,18 @@ public class Abonos {
         par.add(new ParametroSql(abono, TipoDato.Integer));
         par.add(new ParametroSql(mediodepago, TipoDato.Varchar));
 
-        Conexion.conexionL.EjecutarSql((sql.toString()), par);
+        Conexion.conexionL.EjecutarSql(sql, par);
 
     }
-    
-    public void Editar(String ruta, int id, String estado) { //editar el estado de la factura: "Pago","Pendiente","Nula"
-        StringBuilder sql = new StringBuilder();
 
-        switch (ruta) {
-
-            case "GrupoSanCarlos":
-                sql.append("UPDATE abonossancarlos SET estado=? WHERE id=?;");
-                break;
-            case "GrupoAlajuela":
-                sql.append("UPDATE abonosalajuela SET estado=? WHERE id=?;");
-                break;
-            case "GrupoLiberia":
-                sql.append("UPDATE abonosliberia SET estado=? WHERE id=?;");
-                break;
-            case "GrupoGuapiles":
-                sql.append("UPDATE abonosguapiles SET estado=? WHERE id=?;");
-                break;
-            case "GrupoRefuerzo":
-                sql.append("UPDATE abonosrefuerzo SET estado=? WHERE id=?;");
-                break;
-
-        }
+    public void Editar(int id, String estado) { //editar el estado de la factura: "Pago","Pendiente","Nula"
+        String sql="UPDATE abonos SET estado=? WHERE id=?;";
 
         List<ParametroSql> par = new ArrayList<>();
         par.add(new ParametroSql(estado, TipoDato.Varchar));
         par.add(new ParametroSql(id, TipoDato.Integer));
 
-        Conexion.conexionL.EjecutarSql((sql.toString()), par);
+        Conexion.conexionL.EjecutarSql(sql, par);
 
     }
 
@@ -176,9 +116,5 @@ public class Abonos {
     public String getFecha() {
         return fecha;
     }
-    
-    
-    
-    
 
 }
